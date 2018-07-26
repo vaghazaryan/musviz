@@ -1,0 +1,69 @@
+html
+body {
+    margin: 0;
+}
+#controls {
+    position: absolute;
+    display: block;
+    width: 100%;
+    text-align: center;
+    z-index: 2;
+}
+section {
+    width: 100%;
+    height: 100vh;
+    position: relative;
+}
+.viz_box {
+    width: 780px;
+    height: 350px;
+    margin: auto;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
+.music_media {
+    display: block;
+    overflow: hidden;
+    margin: auto;
+    width: 200px;
+    height: 200px;
+    position: absolute;
+    border-radius: 50%;
+    border: 3px solid #e8e8e8;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    transition: all  0.05s ease;
+}
+.music_media img {
+    width: 100%;
+    height: 100%;
+}
+.vibration {
+    animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) infinite;
+    transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+}
+
+@keyframes shake {
+    10%, 90% {
+        transform: translate3d(-2px, 0, 0) scale(2.55);
+    }
+
+    20%, 80% {
+        transform: translate3d(3px, 0, 0) scale(2.55);
+    }
+
+    30%, 50%, 70% {
+        transform: translate3d(-5px, 0, 0) scale(2.55);
+    }
+
+    40%, 60% {
+        transform: translate3d(5px, 0, 0) scale(2.55);
+    }
+}
