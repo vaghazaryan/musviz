@@ -11,6 +11,8 @@ var SCREEN_WIDTH = window.innerWidth,
     AMOUNTX = 10,
     AMOUNTY = 10,
     zoom = 1,
+    material,
+    lines = [],
 
     camera, scene, renderer;
 
@@ -39,7 +41,7 @@ function init() {
     // particles
 
     var PI2 = Math.PI * 2;
-    var material = new THREE.SpriteCanvasMaterial( {
+    material = new THREE.SpriteCanvasMaterial( {
 
         color: 0xffffff,
         program: function ( context ) {
@@ -67,24 +69,7 @@ function init() {
 
     // lines
 
-    for (var i = 0; i < 300; i++) {
-
-        var geometry = new THREE.Geometry();
-
-        var vertex = new THREE.Vector3( Math.random() * 2 - 1, Math.random() * 2 - 1, Math.random() * 2 - 1 );
-        vertex.normalize();
-        vertex.multiplyScalar( 450 );
-
-        geometry.vertices.push( vertex );
-
-        var vertex2 = vertex.clone();
-        vertex2.multiplyScalar( Math.random() * 0.3 + 1 );
-
-        geometry.vertices.push( vertex2 );
-
-        var line = new THREE.Line( geometry, new THREE.LineBasicMaterial( { color: 0xffffff, opacity: Math.random() } ) );
-        scene.add( line );
-    }
+    renderLine()
 
     document.addEventListener( 'mousemove', onDocumentMouseMove, false );
     document.addEventListener( 'touchstart', onDocumentTouchStart, false );
@@ -104,8 +89,36 @@ function onWindowResize() {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
 
-    renderer.setSize( window.innerWidth, window.innerHeight );
+    // renderer.setSize( window.innerWidth, window.innerHeight );
 
+}
+
+function renderLine() {
+    for (var i = 0; i < 300; i++) {
+
+        var geometry = new THREE.Geometry();
+
+        var vertex = new THREE.Vector3( Math.random() * 2 - 1, Math.random() * 2 - 1, Math.random() * 2 - 1 );
+        vertex.normalize();
+        vertex.multiplyScalar( 450 );
+
+        geometry.vertices.push( vertex );
+
+        var vertex2 = vertex.clone();
+        vertex2.multiplyScalar( Math.random() * 0.3 + 1 );
+
+        geometry.vertices.push( vertex2 );
+
+        lines.push(new THREE.Line( geometry, new THREE.LineBasicMaterial( { color: 0xffffff, opacity: Math.random() } ) ) );
+    }
+    scene.add( ...lines );
+}
+
+function updateLines () {
+    // console.log(lines[0])
+    for(var i = 0; i < 300; i++) {
+        // lines[i].geometry.vertices[0].x = Math.sin(Date.now() / 1000) * 10;
+    }
 }
 
 //
@@ -156,7 +169,10 @@ var x = 800,
     z = 800,
     c = 1
 function render() {
+    updateLines();
     camera.position.set(x - (totalPoints * 1.5), y  - (totalPoints * 1.5), z - (totalPoints * 1.5));
+    material.color.set(`#${(255 - bassPoint).toString(16)}${(255 - bassPoint).toString(16)}ff`);
+
     scene.rotation.x += totalPoints / 30000;
     camera.lookAt( scene.position);
 
