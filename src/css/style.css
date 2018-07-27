@@ -1,6 +1,7 @@
 html
 body {
     margin: 0;
+    overflow: hidden;
 }
 #controls {
     position: absolute;
@@ -42,6 +43,11 @@ section {
 .music_media img {
     width: 100%;
     height: 100%;
+}
+.aura {
+    position: absolute;
+    top: 0;
+    z-index: -1;
 }
 .vibration {
     animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) infinite;
